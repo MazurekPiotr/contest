@@ -2,9 +2,21 @@
 @section('content')
     <div class="container">
         @foreach($contests as $contest)
-        <div>
-            {{ $contest->name }}
-        </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{ $contest->name }} contestants</div>
+                        <div class="panel-body">
+                            <ul>
+                            @foreach($contest->users()->get() as $user)
+                                    <li>{{ $user->firstName }} {{ $user->ipaddress }}<a href="deleteUser/{{$user->id}}">Delete</a> </li>
+                            @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
         @endforeach
         <div class="row">
             <div class="col-md-8 col-md-offset-2">

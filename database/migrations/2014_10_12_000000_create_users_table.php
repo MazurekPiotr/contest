@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('country');
             $table->string('email');
             $table->enum('role', ['user', 'moderator', 'admin']);
-            $table->string('ipaddress');
+            $table->string('ipaddress')->unique();
             $table->string('password');
             $table->softDeletes();
             $table->rememberToken();

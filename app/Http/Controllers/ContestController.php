@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contest;
+use App\User;
 use Carbon\Carbon;
 use DB;
 use Auth;
@@ -50,5 +51,13 @@ class ContestController extends Controller
 
             return view('contest.done', compact(['contest']));
         }
+    }
+
+    public function deleteUser($id) {
+
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect()->back();
     }
 }

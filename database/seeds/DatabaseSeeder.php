@@ -23,28 +23,28 @@ class DatabaseSeeder extends Seeder
             [   'name' => 'Contest 1',
                 'description' => 'This is contest one',
                 'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 12, 2017)),
-                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 18, 2017)),
+                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 20, 2017)),
                 'question' => 'What is my favourite color?',
                 'answer' => 'test'
             ],
             [   'name' => 'Contest 2',
                 'description' => 'This is contest two',
                 'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 12, 2017)),
-                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 19, 2017)),
+                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 20, 2017)),
                 'question' => 'What is Sam\'s favourite food?',
                 'answer' => 'pizza'
             ],
             [   'name' => 'Contest 3',
                 'description' => 'This is contest three',
                 'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 12, 2017)),
-                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 20, 2017)),
+                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 22, 2017)),
                 'question' => 'What is the heigth of the Catherdral of Antwerp? (in meters)',
                 'answer' => '123'
             ],
             [   'name' => 'Contest 4',
                 'description' => 'This is contest four',
                 'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 12, 2017)),
-                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 21, 2017)),
+                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 22, 2017)),
                 'question' => 'What colour is the sea?',
                 'answer' => 'blue'
             ]

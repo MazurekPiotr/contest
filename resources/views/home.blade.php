@@ -10,6 +10,7 @@
 
                     <div class="panel-body">
                         <div>{{ $contest->description }}</div>
+                        <p>{{ $contest->end_date }}</p>
                         <a href="/compete/{{$contest->id}}">Compete</a>
                     </div>
                 </div>

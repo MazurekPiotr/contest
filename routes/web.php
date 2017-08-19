@@ -11,3 +11,5 @@ Route::post('/admin/contest/add', 'AdminController@createContest')->name('admin.
 
 Route::get('/compete/{contestId}', 'ContestController@compete');
 Route::post('/compete/{contestId}/add', 'ContestController@addCompete');
+
+Route::get('admin/deleteUser/{id}', 'ContestController@deleteUser');
