@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Contest;
-use App\User;
 use Carbon\Carbon;
-use DB;
-use Auth;
+use App\User\UserRepositoryInterface;
+use App\Contest\ContestRepositoryInterface;
 
 class ContestController extends Controller
 {
 
-    public function __construct()
+    private $userRepository;
+
+    private $contestRepository;
+
+    function __construct(UserRepositoryInterface $userRepository, ContestRepositoryInterface $contestRepository)
     {
-        $this->middleware('auth');
+        $this->userRepository = $userRepository;
+        $this->contestRepository = $contestRepository;
     }
 
     /**
@@ -24,15 +27,13 @@ class ContestController extends Controller
      */
 
     public function compete($contestId) {
-        $contests = Contest::all();
-        $contest = $contests->where('id', $contestId)->first();
+        $contests = $this->contestRepository->getContest($contestId);
         return view('contest.compete', compact(['contest']));
     }
 
     public function addCompete(Request $request, $contestId) {
 
-        $contests = Contest::all();
-        $contest = $contests->where('id', $contestId)->first();
+        $contests = $this->contestRepository->getContest($contestId);
 
         if(DB::table('contest_user')->where([['user_id', Auth::user()->id],['contest_id', $contestId]])->first()){
             return view('contest.already_done', compact(['contest']));
@@ -40,24 +41,16 @@ class ContestController extends Controller
         else {
 
             $this->validate($request, [
-                'answer' => 'required|min:4'
+                'code' => 'required|min:13'
             ]);
 
             DB::table('contest_user')->insert([
                 'user_id' => Auth::user()->id,
                 'contest_id' => $contestId,
-                'answer' => strtolower($request->answer)
+                'code' => strtolower($request->code)
             ]);
 
             return view('contest.done', compact(['contest']));
         }
-    }
-
-    public function deleteUser($id) {
-
-        $user = User::find($id);
-        $user->delete();
-
-        return redirect()->back();
     }
 }

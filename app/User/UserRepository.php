@@ -1,23 +1,22 @@
 <?php
 namespace App\User;
 
-use App\User\UserRepositoryInterface;
-
 class UserRepository implements UserRepositoryInterface
 {
-    private $userRepository;
 
-    function __construct(UserRepositoryInterface $userRepository)
+    public function getUser($id)
     {
-        $this->userRepository = $userRepository;
-    }
-
-    public function getUser($id) {
-        return $this->userRepository->getUser($id);
+        return User::find($id);
     }
 
     public function getAll()
     {
-        return $this->userRepository->getAll();
+        return User::all();
+    }
+
+    public function deleteUser($id)
+    {
+        $user = User::find($id);
+        $user->delete();
     }
 }

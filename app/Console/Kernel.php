@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\ChooseWinnerFromContest'
+        'App\Console\Commands\ChooseWinnerFromContest',
+        'App\Console\Commands\ContestPicker'
     ];
 
     /**
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('choosewinner')->everyMinute();
+        $schedule->command('contestpicker')->everyMinute();
     }
 
     /**

@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Contest\Contest;
-use Illuminate\Support\Facades\DB;
+use App\User\UserRepositoryInterface;
+use App\Contest\ContestRepositoryInterface;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    private $userRepository;
+
+    private $contestRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository, ContestRepositoryInterface $contestRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->contestRepository = $contestRepository;
+    }
 
     /**
      * Show the application dashboard.
@@ -24,5 +28,4 @@ class HomeController extends Controller
     {
         return view('welcome');
     }
-
 }

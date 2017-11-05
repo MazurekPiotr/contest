@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App;
 
 class ContestServiceProvider extends ServiceProvider
 {
@@ -23,9 +24,6 @@ class ContestServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
-            'app\Contest\ContestRepositoryInterface',
-            'app\Contest\ContestRepository'
-        );
+        App::bind('App\Contest\ContestRepositoryInterface','App\Contest\ContestRepository');
     }
 }

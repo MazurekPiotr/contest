@@ -16,6 +16,8 @@ class CreateCodesTable extends Migration
         Schema::create('codes', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('code');
+            $table->integer('contest_id')->unsigned();
+            $table->foreign('contest_id')->references('id')->on('contests')->onDelete('cascade');
             $table->boolean('used');
         });
     }

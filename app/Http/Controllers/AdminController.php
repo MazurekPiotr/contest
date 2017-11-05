@@ -2,15 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\User\UserRepositoryInterface;
+use App\Contest\ContestRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Contest;
+use App\Contest\Contest;
 use Carbon\Carbon;
 
 class AdminController extends Controller
 {
+    private $userRepository;
+
+    private $contestRepository;
+
+    function __construct(UserRepositoryInterface $userRepository, ContestRepositoryInterface $contestRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->contestRepository = $contestRepository;
+    }
 
     public function contests() {
-        $contests = Contest::all();
+        $contests = $this->contestRepository->getAll();
 
         return view('admin.contests', compact(['contests']));
     }
@@ -34,13 +45,19 @@ class AdminController extends Controller
             'description' => $request->get('description'),
             'start_date' => $request->get('start_date'),
             'end_date' => $request->get('end_date'),
-            'question' => $request->get('question'),
-            'answer' => $request->get('answer')
         ]);
 
-        $contests = Contest::all();
+        $contests = $this->contestRepository->getAll();
 
         return view('admin.contests', compact(['contests']));
+    }
+
+    public function deleteUser($id) {
+
+        $user = $this->userRepository->getUser($id);
+        $user->delete();
+
+        return redirect()->back();
     }
 
 }

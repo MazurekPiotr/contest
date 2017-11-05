@@ -20,4 +20,8 @@ class Contest extends Model
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function users() {
+        return $this->belongsToMany('App\User');
+    }
 }

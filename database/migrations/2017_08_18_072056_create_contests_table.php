@@ -19,8 +19,7 @@ class CreateContestsTable extends Migration
             $table->string('description');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->string('question');
-            $table->string('answer');
+            $table->boolean('active');
             $table->integer('winner_id')->nullable();
             $table->timestamps();
         });

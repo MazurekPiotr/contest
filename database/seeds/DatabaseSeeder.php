@@ -20,31 +20,27 @@ class DatabaseSeeder extends Seeder
         DB::table('contests')->insert([
             [   'name' => 'Contest 1',
                 'description' => 'This is contest one',
-                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 12, 2017)),
-                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 20, 2017)),
-                'question' => 'What is my favourite color?',
-                'answer' => 'test'
+                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 4, 2017)),
+                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 6, 2017)),
+                'active' => true
             ],
             [   'name' => 'Contest 2',
                 'description' => 'This is contest two',
-                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 12, 2017)),
-                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 20, 2017)),
-                'question' => 'What is Sam\'s favourite food?',
-                'answer' => 'pizza'
+                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 4, 2017)),
+                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 6, 2017)),
+                'active' => false
             ],
             [   'name' => 'Contest 3',
                 'description' => 'This is contest three',
-                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 12, 2017)),
-                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 22, 2017)),
-                'question' => 'What is the heigth of the Catherdral of Antwerp? (in meters)',
-                'answer' => '123'
+                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 4, 2017)),
+                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 6, 2017)),
+                'active' => false
             ],
             [   'name' => 'Contest 4',
                 'description' => 'This is contest four',
-                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 12, 2017)),
-                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 8, 22, 2017)),
-                'question' => 'What colour is the sea?',
-                'answer' => 'blue'
+                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 4, 2017)),
+                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 6, 2017)),
+                'active' => false
             ]
             ]);
 
@@ -91,6 +87,7 @@ class DatabaseSeeder extends Seeder
         foreach (range(1,100) as $index) {
             DB::table('codes')->insert([
                 'code' => $faker->ean13,
+                'contest_id' => 1,
                 'used' => false
             ]);
         }

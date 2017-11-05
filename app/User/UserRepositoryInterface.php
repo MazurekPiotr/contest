@@ -5,4 +5,5 @@ interface UserRepositoryInterface
 {
     public function getUser($id);
     public function getAll();
+    public function deleteUser($id);
 }

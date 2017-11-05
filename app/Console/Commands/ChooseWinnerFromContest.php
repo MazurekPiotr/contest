@@ -4,10 +4,10 @@ namespace App\Console\Commands;
 
 use App\Mail\WinnerChosen;
 use Illuminate\Console\Command;
-use App\Contest;
+use App\Contest\Contest;
 use Mail;
 use Carbon\Carbon;
-use App\User;
+use App\User\User;
 use DB;
 
 class ChooseWinnerFromContest extends Command
