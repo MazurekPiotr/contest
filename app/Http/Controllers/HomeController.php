@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Contest;
+use App\Contest\Contest;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -22,10 +22,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $contests = Contest::all();
-        $runningContests = $contests->where('end_date', '>', Carbon::now());
-        $endedContests = $contests->where('winner_id', '!=', null);
-        return view('home', compact(['runningContests', 'endedContests']));
+        return view('welcome');
     }
 
 }

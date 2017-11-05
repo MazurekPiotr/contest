@@ -19,7 +19,7 @@ class CreateContestUserTable extends Migration
             $table->foreign('contest_id')->references('id')->on('contests')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('answer');
+            $table->string('code')->nullable();
         });
     }
 

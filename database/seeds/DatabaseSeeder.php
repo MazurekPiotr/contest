@@ -3,8 +3,8 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Contest;
-use App\User;
+use App\Contest\Contest;
+use App\User\User;
 
 use Faker\Factory as Faker;
 
@@ -17,8 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-
         DB::table('contests')->insert([
             [   'name' => 'Contest 1',
                 'description' => 'This is contest one',
@@ -49,6 +47,10 @@ class DatabaseSeeder extends Seeder
                 'answer' => 'blue'
             ]
             ]);
+
+        $faker = Faker::create();
+
+
         DB::table('users')->insert([
             'firstName' => 'Piotr',
             'lastName' => 'Mazurek',
@@ -56,13 +58,12 @@ class DatabaseSeeder extends Seeder
             'houseNumber' => '3',
             'city' => 'Borgerhout',
             'country' => 'Belgium',
-            'ipaddress' => '127.0.0.1',
+            'ipaddress' => $faker->ipv4,
             'role' => 'admin',
             'email' => 'pioma93@hotmail.com',
             'password' => bcrypt('webdev')
         ]);
 
-        $faker = Faker::create();
         foreach (range(2,50) as $index) {
             DB::table('users')->insert([
                 'id' => $index,
@@ -83,7 +84,14 @@ class DatabaseSeeder extends Seeder
             DB::table('contest_user')->insert([
                 'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
                 'contest_id' => $faker->randomElement(Contest::all()->pluck('id')->toArray()),
-                'answer' => 'test'
+                'code' => null
+            ]);
+        }
+
+        foreach (range(1,100) as $index) {
+            DB::table('codes')->insert([
+                'code' => $faker->ean13,
+                'used' => false
             ]);
         }
 
