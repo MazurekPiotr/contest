@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Contest;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,14 +20,4 @@ class Contest extends Model
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function users() {
-        return $this->belongsToMany('App\User');
-    }
-
-    public function winner($id) {
-        $users = User::all();
-        $user = $users->where('id', $id)->first();
-        return $user;
-    }
 }

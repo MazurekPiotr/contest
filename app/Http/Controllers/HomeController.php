@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Contest;
 use Illuminate\Support\Facades\DB;
-use Auth;
 
 class HomeController extends Controller
 {
