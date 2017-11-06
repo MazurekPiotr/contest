@@ -2,14 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\WinnerChosen;
 use Illuminate\Console\Command;
-use App\Contest\Contest;
 use App\Contest\ContestRepositoryInterface;
-use Mail;
 use Carbon\Carbon;
-use App\User\User;
-use DB;
 
 class ContestPicker extends Command
 {
@@ -57,6 +52,11 @@ class ContestPicker extends Command
             if($now->greaterThan($start_date) && $now->lessThan($end_date))
             {
                 $contest->active = true;
+                $contest->save();
+            }
+            else {
+                $contest->active = false;
+                $contest->save();
             }
         }
     }

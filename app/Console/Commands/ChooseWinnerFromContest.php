@@ -2,16 +2,20 @@
 
 namespace App\Console\Commands;
 
+use App\Contest\ContestRepositoryInterface;
 use App\Mail\WinnerChosen;
+use App\User\UserRepositoryInterface;
 use Illuminate\Console\Command;
-use App\Contest\Contest;
 use Mail;
 use Carbon\Carbon;
-use App\User\User;
-use DB;
+use Maatwebsite\Excel\Excel;
 
 class ChooseWinnerFromContest extends Command
 {
+    private $userRepository;
+
+    private $contestRepository;
+
     /**
      * The name and signature of the console command.
      *
@@ -31,9 +35,11 @@ class ChooseWinnerFromContest extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepositoryInterface $userRepository, ContestRepositoryInterface $contestRepository)
     {
         parent::__construct();
+        $this->userRepository = $userRepository;
+        $this->contestRepository = $contestRepository;
     }
 
     /**
@@ -43,26 +49,23 @@ class ChooseWinnerFromContest extends Command
      */
     public function handle()
     {
-        $runninContests = Contest::all()->where('winner_id', NULL);
+        $contests = $this->contestRepository->getAll();
+        foreach ($contests as $contest) {
+            if($contest->winner_id == null) {
+                $now = Carbon::now();
+                $end_date = Carbon::parse($contest->end_date);
 
-        foreach ($runninContests as $contest) {
-            $now = Carbon::now();
-            $end_date = Carbon::parse($contest->end_date);
+                if ($now->gte($end_date)) {
+                    $contestants = $contest->users()->get();
 
-            if ($now->gte($end_date)) {
-                $contestants = Contest::find($contest->id)->users()->get();
-                $winners = [];
-                foreach ($contestants as $contestant) {
-                    $winner = DB::table('contest_user')->where([['user_id', $contestant->id],['contest_id', $contest->id]])->where('answer', $contest->answer)->first();
-                    array_push($winners, $winner);
+                    $winner_id = array_random(collect($contestants)->all())->id;
+
+                    $user = $this->userRepository->getUser($winner_id);
+                    $contest->winner_id = $winner_id;
+                    $contest->save();
+
+                    Mail::to($user->email)->send(new WinnerChosen($user, $contest));
                 }
-                $winner = array_random($winners)->user_id;
-
-                $user = User::find($winner);
-                $contest->winner_id = $winner;
-                $contest->save();
-
-                Mail::to($user->email)->send(new WinnerChosen($user, $contest));
             }
         }
     }

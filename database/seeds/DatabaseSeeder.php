@@ -18,31 +18,35 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('contests')->insert([
-            [   'name' => 'Contest 1',
+            [
+                'name' => 'Contest 1',
                 'description' => 'This is contest one',
                 'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 4, 2017)),
-                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 6, 2017)),
+                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 5, 2017)),
                 'active' => true
             ],
-            [   'name' => 'Contest 2',
+            [
+                'name' => 'Contest 2',
                 'description' => 'This is contest two',
-                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 4, 2017)),
+                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 5, 2017)),
                 'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 6, 2017)),
                 'active' => false
             ],
-            [   'name' => 'Contest 3',
+            [
+                'name' => 'Contest 3',
                 'description' => 'This is contest three',
-                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 4, 2017)),
-                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 6, 2017)),
+                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 6, 2017)),
+                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 7, 2017)),
                 'active' => false
             ],
-            [   'name' => 'Contest 4',
+            [
+                'name' => 'Contest 4',
                 'description' => 'This is contest four',
-                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 4, 2017)),
-                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 6, 2017)),
+                'start_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 7, 2017)),
+                'end_date' => date('Y-m-d G:i:s', mktime(0, 0, 0, 11, 8, 2017)),
                 'active' => false
             ]
-            ]);
+        ]);
 
         $faker = Faker::create();
 
@@ -50,10 +54,6 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'firstName' => 'Piotr',
             'lastName' => 'Mazurek',
-            'streetName' => 'Vrijgeweide',
-            'houseNumber' => '3',
-            'city' => 'Borgerhout',
-            'country' => 'Belgium',
             'ipaddress' => $faker->ipv4,
             'role' => 'admin',
             'email' => 'pioma93@hotmail.com',
@@ -65,10 +65,6 @@ class DatabaseSeeder extends Seeder
                 'id' => $index,
                 'firstName' => $faker->name,
                 'lastName' => $faker->name,
-                'streetName' => $faker->streetName,
-                'houseNumber' => $faker->randomNumber,
-                'city' => $faker->city,
-                'country' => $faker->country,
                 'ipaddress' => $faker->ipv4,
                 'role' => 'user',
                 'email' => 'pioma93@hotmail.com',
@@ -80,7 +76,8 @@ class DatabaseSeeder extends Seeder
             DB::table('contest_user')->insert([
                 'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
                 'contest_id' => $faker->randomElement(Contest::all()->pluck('id')->toArray()),
-                'code' => null
+                'created_at' => Carbon::today(),
+                'updated_at' => Carbon::today()
             ]);
         }
 

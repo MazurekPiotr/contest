@@ -17,10 +17,6 @@ class CreateUsersTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('firstName');
             $table->string('lastName');
-            $table->string('streetName');
-            $table->string('houseNumber');
-            $table->string('city');
-            $table->string('country');
             $table->string('email');
             $table->enum('role', ['user', 'moderator', 'admin']);
             $table->string('ipaddress')->unique();

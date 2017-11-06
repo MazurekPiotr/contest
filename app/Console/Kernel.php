@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('choosewinner')->everyMinute();
         $schedule->command('contestpicker')->everyMinute();
+        $schedule->command('sendexcel')->dailyAt('21:40');
     }
 
     /**

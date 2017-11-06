@@ -7,7 +7,9 @@ class ContestRepository implements ContestRepositoryInterface
 {
     public function getAll()
     {
-        return Contest::all();
+        $contests = Contest::all();
+
+        return $contests;
     }
 
     public function getContest($id)
