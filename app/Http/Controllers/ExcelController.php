@@ -7,6 +7,8 @@ use App\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Excel;
 use DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class ExcelController extends Controller
 {
@@ -26,18 +28,27 @@ class ExcelController extends Controller
     }
     public function downloadExcel($type)
     {
-        $data = DB::table('contest_user')->get();
+        $data = DB::table('contest_user')->whereDate('created_at', Carbon::yesterday()->toDateString())->get();
+        $excelData = [];
         foreach ($data as $record) {
             $user = $this->userRepository->getUser($record->user_id);
             $contest = $this->contestRepository->getContest($record->contest_id);
             $excelData[] = ['contestant' => $user->firstName. ' '. $user->lastName, 'contest name' => $contest->name,  ];
         }
-        return Excel::create('all_entries', function($excel) use ($excelData) {
+        $sheet = Excel::create('all_entries', function($excel) use ($excelData) {
             $excel->sheet('mySheet', function($sheet) use ($excelData)
             {
                 $sheet->fromArray($excelData);
             });
-        })->download($type);
+        });
+
+        $filePath = 'excel/' . Carbon::now()->toDateString() . '_entries.xls';
+
+        Storage::put($filePath, $sheet);
+
+        dd(storage_path('app/' . $filePath));
+        return $sheet->download($type);
+
     }
     public function importExcel(Request $request)
     {

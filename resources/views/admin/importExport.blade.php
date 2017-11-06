@@ -19,9 +19,6 @@
         <input type="file" name="import_file" />
         <label for="contest">Contest number: </label>
         <select name="contest" id="contest">
-            @foreach($contests as $contest)
-
-            @endforeach
         </select>
         {{ csrf_field() }}
         <button class="btn btn-primary">Import File</button>

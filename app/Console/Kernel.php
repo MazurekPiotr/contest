@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Console\Commands\ChooseWinnerFromContest',
-        'App\Console\Commands\ContestPicker'
+        'App\Console\Commands\ContestPicker',
+        'App\Console\Commands\SendExcel'
     ];
 
     /**
@@ -27,7 +28,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('choosewinner')->everyMinute();
         $schedule->command('contestpicker')->everyMinute();
-        $schedule->command('sendexcel')->dailyAt('21:40');
+        $schedule->command('sendexcel')->dailyAt('22:50');
     }
 
     /**

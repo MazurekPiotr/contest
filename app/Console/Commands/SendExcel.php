@@ -3,11 +3,12 @@
 namespace App\Console\Commands;
 
 use App\Contest\ContestRepositoryInterface;
-use App\Mail\WinnerChosen;
+use App\Mail\SendExcel as MailExcel;
 use App\User\UserRepositoryInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\App;
-use Maatwebsite\Excel\Excel;
+use Excel;
+use Illuminate\Support\Facades\Storage;
 use Mail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -52,23 +53,7 @@ class SendExcel extends Command
      */
     public function handle()
     {
-        $contestToday = DB::table('contest_user')->where('created_at', Carbon::today());
 
-        $contestantsArray[] = ['id', 'firstName','lastName', 'email','created_at'];
-
-        $data = DB::table('contest_user')->where('created_at', '<', Carbon::today())->get();
-        foreach ($data as $record) {
-            $user = $this->userRepository->getUser($record->user_id);
-            $contest = $this->contestRepository->getContest($record->contest_id);
-            $excelData[] = ['contestant' => $user->firstName. ' '. $user->lastName, 'contest name' => $contest->name ];
-        }
-        $sheet =  Excel::create('all_entries', function($excel) use ($excelData) {
-            $excel->sheet('mySheet', function($sheet) use ($excelData)
-            {
-                $sheet->fromArray($excelData);
-            });
-        });
-
-        Mail::send(winn);
+        Mail::to('pioma93@hotmail.com')->send(new MailExcel($this->userRepository, $this->contestRepository));
     }
 }
