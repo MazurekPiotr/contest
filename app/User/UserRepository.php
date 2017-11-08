@@ -9,6 +9,11 @@ class UserRepository implements UserRepositoryInterface
         return User::find($id);
     }
 
+    public function getUserByMail($mail)
+    {
+        return User::where('email', $mail)->first();
+    }
+
     public function getAll()
     {
         return User::all();

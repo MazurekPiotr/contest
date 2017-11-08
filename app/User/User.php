@@ -29,7 +29,11 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        var_dump($this->role);
         return $this->role; // this looks for an admin column in your users table
+    }
+
+    public function contests()
+    {
+        return $this->hasMany('App\Contest\Contest');
     }
 }

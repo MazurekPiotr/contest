@@ -7,6 +7,7 @@ use App\Contest\Contest;
 use App\User\User;
 
 use Faker\Factory as Faker;
+use App\Code;
 
 class DatabaseSeeder extends Seeder
 {
@@ -72,12 +73,13 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        foreach (range(1,20) as $index) {
-            DB::table('contest_user')->insert([
-                'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
-                'contest_id' => $faker->randomElement(Contest::all()->pluck('id')->toArray()),
-                'created_at' => Carbon::today(),
-                'updated_at' => Carbon::today()
+
+
+        foreach (range(1,100) as $index) {
+            DB::table('codes')->insert([
+                'code' => $faker->ean13,
+                'contest_id' => 1,
+                'used_by' => $faker->randomElement(User::all()->pluck('id')->toArray())
             ]);
         }
 
@@ -85,7 +87,17 @@ class DatabaseSeeder extends Seeder
             DB::table('codes')->insert([
                 'code' => $faker->ean13,
                 'contest_id' => 1,
-                'used' => false
+                'used_by' => null
+            ]);
+        }
+
+        foreach (range(1,20) as $index) {
+            DB::table('contest_user')->insert([
+                'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
+                'contest_id' => $faker->randomElement(Contest::all()->pluck('id')->toArray()),
+                'code_id' => $faker->randomElement(Code::all()->pluck('id')->toArray()),
+                'created_at' => Carbon::today(),
+                'updated_at' => Carbon::today()
             ]);
         }
 

@@ -18,8 +18,9 @@ class CreateCodesTable extends Migration
             $table->string('code');
             $table->integer('contest_id')->unsigned();
             $table->foreign('contest_id')->references('id')->on('contests')->onDelete('cascade');
-            $table->boolean('used_by')->unsigned();
-            $table->foreign('contest_id')->references('id')->on('contests')->onDelete('cascade');
+            $table->integer('used_by')->unsigned()->nullable();
+            $table->foreign('used_by')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

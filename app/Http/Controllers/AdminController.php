@@ -27,15 +27,15 @@ class AdminController extends Controller
     }
 
     public function users() {
-        return view('admin.users');
+        $contests = $this->contestRepository->getAll();
+
+        return view('admin.users', compact(['contests']));
     }
 
     public function createContest(Request $request) {
         $this->validate($request, [
             'name' => 'required|min:3',
             'description' => 'required|min:1',
-            'question' => 'required|min:1',
-            'answer' => 'required|min:1',
             'start_date' => 'required|date',
             'end_date' => 'required|date'
         ]);
@@ -45,7 +45,28 @@ class AdminController extends Controller
             'description' => $request->get('description'),
             'start_date' => $request->get('start_date'),
             'end_date' => $request->get('end_date'),
+            'active' => false
         ]);
+
+        $contests = $this->contestRepository->getAll();
+
+        return view('admin.contests', compact(['contests']));
+    }
+
+    public function updateContest(Request $request) {
+        $this->validate($request, [
+            'contest' => 'required',
+            'name' => 'min:1',
+            'description' => 'required|min:1',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date'
+        ]);
+
+        $contest = $this->contestRepository->getContest($request->contest);
+        $contest->start_date = $request->start_date;
+        $contest->end_date = $request->end_date;
+        $contest->name = $request->name;
+        $contest->save();
 
         $contests = $this->contestRepository->getAll();
 

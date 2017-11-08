@@ -8,7 +8,7 @@ class Contest extends Model
 {
 
     protected $fillable = [
-        'name', 'description', 'start_date', 'end_date', 'question', 'answer', 'winner_id'
+        'name', 'description', 'start_date', 'end_date', 'active', 'winner_id'
     ];
 
 

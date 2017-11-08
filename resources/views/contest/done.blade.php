@@ -1,12 +1,14 @@
 @extends('layouts.app')
 @section('content')
-    <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
-            <div class="panel-heading">You have competed in {{ $contest->name }}</div>
-
-            <div class="panel-body">
-                Thank you for competing!
-            </div>
-        </div>
+    <div class="row center-align">
+        <img src="/img/IJSBOERKE.png" width="300">
     </div>
+    <div class="main row red center-align extra-margin-top">
+        <h5 class="white-text">Thank you for competing in {{ $contest->name }}!</h5>
+        <p class="white-text">Check your mails to see if you've won!</p>
+
+    </div>
+@endsection
+@section('scripts')
+
 @endsection

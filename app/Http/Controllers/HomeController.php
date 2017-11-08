@@ -26,6 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $contests = $this->contestRepository->getAll();
+        return view('welcome', compact(['contests']));
     }
 }

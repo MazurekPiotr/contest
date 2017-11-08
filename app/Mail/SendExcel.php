@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Code;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -34,12 +35,13 @@ class SendExcel extends Mailable
      */
     public function build()
     {
-        $data = DB::table('contest_user')->whereDate('created_at', Carbon::yesterday())->get();
+        $data = DB::table('contest_user')->whereDate('created_at', Carbon::today()->toDateString())->get();
         $excelData = [];
         foreach ($data as $record) {
             $user = $this->userRepository->getUser($record->user_id);
             $contest = $this->contestRepository->getContest($record->contest_id);
-            $excelData[] = ['contestant' => $user->firstName. ' '. $user->lastName, 'contest name' => $contest->name,  ];
+            $code = Code::where('id', $record->code_id)->first();
+            $excelData[] = ['contestant' => $user->firstName. ' '. $user->lastName, 'contest name' => $contest->name, 'code' => $code->code ];
         }
         $sheet = Excel::create(Carbon::now()->toDateString() . '_entries', function($excel) use ($excelData) {
             $excel->sheet('mySheet', function($sheet) use ($excelData)
